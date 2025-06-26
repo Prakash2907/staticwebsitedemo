@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Colorful DigitalOcean Site</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.5s ease-in-out;
+    }
+
+    iframe {
+      border: none;
+      width: 80%;
+      max-width: 900px;
+      height: 500px;
+      margin: 20px 0;
+    }
+
+    img.logo {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+  </style>
+  <script>
+    const colors = ["#FF6B6B", "#6BCB77", "#4D96FF", "#FFD93D", "#A66DD4"];
+    window.onload = function() {
+      document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    };
+  </script>
+</head>
+<body>
+  <!-- Optional: Add a DigitalOcean logo here -->
+  <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/f/ff/DigitalOcean_logo.svg" alt="DigitalOcean Logo">
+
+  <!-- Embedded YouTube video -->
+  <iframe 
+    src="https://www.youtube.com/embed/y3PCZ4UEUcI" 
+    title="Welcome to DigitalOcean" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+
+  <h1 style="color: white; text-shadow: 1px 1px 4px #000;">Welcome to My Colorful DigitalOcean Page</h1>
+</body>
+</html>
