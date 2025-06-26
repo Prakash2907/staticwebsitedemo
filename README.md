@@ -34,9 +34,9 @@ This guide describes how to deploy static website on digital ocean kubernetes ma
   FROM nginx:stable-alpine
   COPY index.html /usr/share/nginx/html
   ```
-  The FROM command will is used to specify the base image which needs to be used to create docker image. In this case we are using nginx:stable-alpine image as it    doesn't have any critical vulnerabilities. The best practice says use a secure image always. The tag specify which image version to use. If you don't specify the   tag it will default to the latest version which may or maynot work for your application.
+  The FROM command will is used to specify the base image which needs to be used to create docker image. In this case we are using nginx:stable-alpine image as it   doesn't have any critical vulnerabilities. The best practice says use a secure image always. The tag specify which image version to use. If you don't specify      the tag it will default to the latest version which may or maynot work for your application.
 
-  The COPY command copies the build context (in our case index.html) to the required directory. It is better to keep the Dockerfile and the build context in the      single directory.
+  The COPY command copies the build context (in our case index.html) to the required directory. It is better to keep the Dockerfile and the build context in the     single directory.
 
  - Building the docker image. The image is build using docker build command which is run in the same directory as the docker file as we saw earlier.
    ```shell
@@ -48,7 +48,7 @@ This guide describes how to deploy static website on digital ocean kubernetes ma
    REPOSITORY               TAG       IMAGE ID       CREATED         SIZE
    prakashjha1986/k8-demo   latest    7486083978bf   7 minutes ago   48.2MB
    ```
-   We need to push the image to docker hub. For this we will 1st login to the docker hub using username and pasword and use the    below command.
+   We need to push the image to docker hub. For this we will 1st login to the docker hub using username and pasword and use the below command.
    ```shell
    root@ubuntu-s-1vcpu-1gb-blr1-01:~/staticwebsitedemo/Static# docker login -u prakashjha1986 
    Login Succeeded
@@ -65,3 +65,51 @@ This guide describes how to deploy static website on digital ocean kubernetes ma
  - Login to DigitalOcean [here](https://cloud.digitalocean.com/login)
 
  - Click Create Button on top right and select Kubernetes.
+   ![KubernetesClusterCreate](https://github.com/user-attachments/assets/2f315c1c-52dc-415b-829d-54f10e3420a4)
+
+ - Select the latest version as a best practice recommended by Digital Ocean and select the region where you need to lauch cluster
+   ![ClusterCreate2](https://github.com/user-attachments/assets/7d5d8186-2efe-40d7-b306-8e2291ea18a0)
+   
+ - Keep the VPC setting as it is.
+   
+ - In the Cluster Capacity section, Provide a Node pool name and change number of Nodes to 2. Check "Set Node Pool to Autoscale" which will increase the number on    Nodes, based on CPU utilization.
+   ![Clustercapacity](https://github.com/user-attachments/assets/6cfdcfd0-9505-4e79-be23-3efdc06d8f40)
+   
+ - There is also a high avaialbility option for controlplane, which will run control plane components in HA mode. This can be used in the production         environment where high availability is very essential.
+   
+ - Lastly, add the cluster name under finalize section and then create the cluster.You will see your cluster as shown below.
+
+   ![ClusterCreate3](https://github.com/user-attachments/assets/74cc8775-bbde-4313-878f-5753a825ed0a)
+   
+# Step 03 - Connecting to kubernetes cluster on Digital Ocean using doctl and kubectl
+ - Install doctl as per the steps given in the official document [here](https://docs.digitalocean.com/reference/doctl/how-to/install/)
+ - To provide doctl access to the digital ocean environment create an API token & click on generate the token [API token  generation](https://cloud.digitalocean.com/account/api/tokens). It will generate a token which you will use to authenticate doctl as per the given below steps.
+   ![APIToken](https://github.com/user-attachments/assets/81e2b756-2fd8-4d73-878f-e3306ea74e8e)
+   ```shell
+   $ doctl auth init
+   Please authenticate doctl for use with your DigitalOcean account. You can generate a token in the control panel at             https://cloud.digitalocean.com/account/api/tokens
+
+   ❯ Enter your access token:  ●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
+
+   Validating token... ✔      
+   ```
+ - Once the doctl is authenticated install kubectl as per the instruction given [here](https://kubernetes.io/docs/tasks/tools/)
+ - now run the below commnd which will create a .kube/config file to authenticate kubernetes
+    ```shell
+    $ doctl kubernetes cluster kubeconfig save cbd4fc7a-a5f6-45e3-861f-389bf992ca59
+    Notice: Adding cluster credentials to kubeconfig file
+    Notice: Setting current-context to do-nyc1-mystaticwebsite
+    ```
+  - Run "kubectl get nodes" command to access the nodes of the kubernetes cluster
+    ```shell
+    $ kubectl get nodes
+    NAME            STATUS   ROLES    AGE   VERSION
+    webpool-l3ta2   Ready    <none>   66m   v1.33.1
+    webpool-l3tap   Ready    <none>   65m   v1.33.1
+    ```
+
+
+
+
+
+ - 
