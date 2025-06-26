@@ -107,9 +107,6 @@ This guide describes how to deploy static website on digital ocean kubernetes ma
     webpool-l3ta2   Ready    <none>   66m   v1.33.1
     webpool-l3tap   Ready    <none>   65m   v1.33.1
     ```
+# Step 04 - Deploying static website on Managed kubernetes cluster, scaling and loadbalacing
+ - Now our kubernetes clusters are ready lets deploy our static website on this cluster. Since its a 2 node cluster we will use Kubernetes Deployments manage the deployment of our website. The kubernetes            deployment support replica set which helps us to scale out or scale in the pod based on the number of replicas we define in our deployment.yaml file.The deployments manage the rollout of new versions or          configurations of an application. Lets deploy our static website using our kubernetes deployment template. For this go to the github repository and clone the kubernetes deployment file. We will use it one by     one 
 
-
-
-
-
- - 
